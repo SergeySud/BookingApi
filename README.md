@@ -16,7 +16,8 @@ API has the following endpoints:
 
 ```/admin/``` - you can access the admin panel here by loging in a superuser account.
 ```/accounts/register``` - the endpoint is avaliable without authentifaction. The endpoint accepts only POST requests. The endpoint accepts the demands the following parametrs in request body:
-```{
+```
+{
     "username": "user2",
     "password": "1",
     "password2": "1"
@@ -34,14 +35,16 @@ You can send the following parametrs to filter and sort avaliable rooms.
 ```/booking/reservations/``` - the endpoint is avaliable only for autahrized users.
 Sending GET request will result in a response with a list of reservation for the user.
 Sending POST request will add a reservation for the user. The endpoint demands the following parametrs:
-```{
+```
+{
     "reservation_start_date": "2023-11-01",
     "reservation_end_date": "2023-11-10",
     "room": 3
 }
 ```
 Sending DELETE request will delete a reservation for the user or by a superuser. The endpoint demands the following parametrs:
-```{
+```
+{
     "id": 3
 }
 ```
