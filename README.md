@@ -29,11 +29,12 @@ API has the following endpoints:
 
 You can send the following parametrs to filter and sort avaliable rooms.
 ```
-    "guests_number": 1, # desired room capacity
-    "sort_by": "price_per_day", # results are sorted by this parameter, you can use "name", "price_per_day", "guests_number".
+    "guests_number": 1,
+    "sort_by": "price_per_day",
     "reservation_start_date": "2023-12-02", 
     "reservation_end_date": "2023-12-03",
 ```
+You can use "name", "price_per_day", "guests_number" parametrs for sorting.
 
 
 ```/booking/reservations/``` - the endpoint is avaliable only for autahrized users.
@@ -49,7 +50,7 @@ Sending a POST request will add a reservation for the user. The endpoint demands
 }
 ```
 
-Sending a DELETE request will delete a reservation for the user or by a superuser. The endpoint demands the following parametrs:
+Sending a DELETE request will delete a reservation for the user or by a superuser. The endpoint demands id of the reservation:
 ```
 {
     "id": 3
