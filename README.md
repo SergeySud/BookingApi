@@ -14,9 +14,9 @@ Application setup:
 API documentation:
 API has the following endpoints: 
 
-```/admin/``` - you can access the admin panel here by loging in a superuser account.
+```/admin/``` - you can access the admin panel here by logging in a superuser account.
 
-```/accounts/register``` - the endpoint is avaliable without authentifaction. The endpoint accepts only POST requests. The endpoint accepts the demands the following parametrs in request body:
+```/accounts/register``` - the endpoint is available without authentication. The endpoint accepts only POST requests. The endpoint accepts the demands the following parameters in request body:
 ```
 {
     "username": "user2",
@@ -25,23 +25,23 @@ API has the following endpoints:
 }
 ```
 
-```/booking/rooms/``` - the endpoint is avaliable without authentifaction. The endpoint accepts only GET requests.
+```/booking/rooms/``` - the endpoint is available without authentication. The endpoint accepts only GET requests.
 
-You can send the following parametrs to filter and sort avaliable rooms.
+You can send the following parameters to filter and sort available rooms.
 ```
     "guests_number": 1,
     "sort_by": "price_per_day",
     "reservation_start_date": "2023-12-02", 
     "reservation_end_date": "2023-12-03",
 ```
-You can use "name", "price_per_day", "guests_number" parametrs for sorting.
+You can use "name", "price_per_day", "guests_number" parameters for sorting.
 
 
-```/booking/reservations/``` - the endpoint is avaliable only for autahrized users.
+```/booking/reservations/``` - the endpoint is available only for authorized users.
 
 Sending a GET request will result in a response with a list of reservation for the user.
 
-Sending a POST request will add a reservation for the user. The endpoint demands the following parametrs:
+Sending a POST request will add a reservation for the user. The endpoint demands the following parameters:
 ```
 {
     "reservation_start_date": "2023-11-01",
@@ -51,6 +51,8 @@ Sending a POST request will add a reservation for the user. The endpoint demands
 ```
 
 Sending a DELETE request will delete a reservation for the user or by a superuser. The endpoint demands id of the reservation:
+
+
 ```
 {
     "id": 3
