@@ -86,7 +86,7 @@ class ReservationView(generics.ListCreateAPIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def destroy(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         reservation_id = request.data.get('id', None)
         if reservation_id is not None:
             reservations = Reservation.objects.filter(id=reservation_id)
