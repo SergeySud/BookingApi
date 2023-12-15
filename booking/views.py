@@ -51,8 +51,7 @@ class ReservationView(generics.ListCreateAPIView, generics.DestroyAPIView):
         user = self.request.user
         return Reservation.objects.filter(reserved_by_user=user)
 
-    def create(self, request, *args, **kwargs):
-        room_id = request.data.get('room')
+     room_id = request.data.get('room')
         reservation_start_date = request.data.get('reservation_start_date')
         reservation_end_date = request.data.get('reservation_end_date')
         user = request.user
@@ -79,11 +78,10 @@ class ReservationView(generics.ListCreateAPIView, generics.DestroyAPIView):
             return Response({'error': 'Room is not available for the specified dates'},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        request.data['reserved_by_user'] = user.id
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(reserved_by_user=user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
