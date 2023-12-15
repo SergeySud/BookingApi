@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from accounts.serializers import RegistrationSerializer
 
 
-# Create your views here.
 @api_view(['POST'])
 @authentication_classes([BasicAuthentication])
 @permission_classes([AllowAny])

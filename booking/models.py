@@ -12,10 +12,6 @@ class Room(models.Model):
     guests_number = models.IntegerField()
 
 
-class Visitor(models.Model):
-    name = models.CharField(max_length=200)
-
-
 class Reservation(models.Model):
     id = models.AutoField(primary_key=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
