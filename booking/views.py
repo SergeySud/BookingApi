@@ -43,7 +43,7 @@ class RoomFilterView(generics.ListAPIView):
         return queryset
 
 
-class ReservationView(generics.RetrieveUpdateDestroyAPIView):
+class ReservationView(generics.ListCreateAPIView):
     serializer_class = ReservationSerializer
     permission_classes = [IsAuthenticated]
 
