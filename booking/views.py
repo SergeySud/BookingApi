@@ -51,7 +51,7 @@ class ReservationView(generics.ListCreateAPIView, generics.DestroyAPIView):
         user = self.request.user
         return Reservation.objects.filter(reserved_by_user=user)
 
-     room_id = request.data.get('room')
+        room_id = request.data.get('room')
         reservation_start_date = request.data.get('reservation_start_date')
         reservation_end_date = request.data.get('reservation_end_date')
         user = request.user
