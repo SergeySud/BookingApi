@@ -43,7 +43,7 @@ class RoomFilterView(generics.ListAPIView):
         return queryset
 
 
-class ReservationView(generics.ListCreateAPIView):
+class ReservationView(generics.ListCreateAPIView, generics.DestroyAPIView):
     serializer_class = ReservationSerializer
     permission_classes = [IsAuthenticated]
 
@@ -58,7 +58,7 @@ class ReservationView(generics.ListCreateAPIView):
         user = request.user
 
         if not room_id or not reservation_start_date or not reservation_end_date:
-            return Response({'error': 'room, reservation_start_date, and reservation_end_date are required'},
+            return Response({'error': "'room,' 'reservation_start_date', and 'reservation_end_date' are required"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
@@ -79,16 +79,12 @@ class ReservationView(generics.ListCreateAPIView):
             return Response({'error': 'Room is not available for the specified dates'},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        request.data['reserved_by_user'] = user.id
-
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(reserved_by_user=user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def delete(self, request, *args, **kwargs):
+    def destroy(self, request, *args, **kwargs):
         reservation_id = request.data.get('id', None)
         if reservation_id is not None:
             reservations = Reservation.objects.filter(id=reservation_id)
@@ -98,5 +94,7 @@ class ReservationView(generics.ListCreateAPIView):
                     reservation.delete()
                     return Response({'detail': 'Reservation deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
                 return Response({'error': 'No access'}, status=status.HTTP_403_FORBIDDEN)
+
             return Response({'error': 'Reservation not found'}, status=status.HTTP_404_NOT_FOUND)
+
         return Response({'error': 'Key not found'}, status=status.HTTP_404_NOT_FOUND)
