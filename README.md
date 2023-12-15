@@ -1,6 +1,6 @@
 # BookingApi
 Application setup:
-1. Download dependencies: Django, djangorestframework, psycopg2
+1. Download dependencies from requirements.txt
 2. Create a new user and a new database or edit DATABASES parametrs in settings.py
 3. Apply migrations:
 ```python manage.py makemigrations```
