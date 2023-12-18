@@ -29,7 +29,7 @@ API has the following endpoints:
 
 You can use  the following parameters in URL to filter and sort available rooms.
 ```
-/booking/rooms/?pricer_per_day=10&guests_number=1&reservation_start_date=2023-12-02&reservation_end_date=2023-12-03
+/booking/rooms/?price_per_day=10&guests_number=1&reservation_start_date=2023-12-02&reservation_end_date=2023-12-03
 ```
 
 
