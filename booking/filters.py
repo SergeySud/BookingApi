@@ -28,11 +28,11 @@ class RoomFilter(django_filters.FilterSet):
 
 
 class ReservationFilter(django_filters.FilterSet):
-    user = django_filters.NumberFilter(field_name="", method="filter_by_user")
+    user = django_filters.CharFilter(field_name="user", method="filter_reserved_by_user", required=True)
 
     class Meta:
         model = Reservation
         fields = []
 
-        def filter_reserved_by_user(self, queryset, name, value):
-            return queryset.filter(reserved_by_user=value)
+    def filter_reserved_by_user(self, queryset, name, value):
+        return queryset.filter(reserved_by_user=self.request.user)
