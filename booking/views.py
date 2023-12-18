@@ -6,7 +6,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from booking.filters import RoomFilter
+from booking.filters import RoomFilter, ReservationFilter
 from booking.models import Room, Reservation
 from booking.serializers import RoomSerializer, ReservationSerializer
 
@@ -20,36 +20,17 @@ class RoomFilterView(generics.ListAPIView):
     ordering_fields = ['pricer_per_day', 'guests_number']
     filterset_class = RoomFilter
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-
-        price_per_day = self.request.data.get('price_per_day')
-        guests_number = self.request.data.get('guests_number')
-        reservation_start_date = self.request.data.get('reservation_start_date')
-        reservation_end_date = self.request.data.get('reservation_end_date')
-
-        if price_per_day:
-            queryset = queryset.filter(price_per_day=price_per_day)
-        if guests_number:
-            queryset = queryset.filter(guests_number=guests_number)
-
-        if reservation_start_date and reservation_end_date:
-            reservations = Reservation.objects.filter(
-                reservation_end_date__gte=reservation_start_date,
-                reservation_start_date__lte=reservation_end_date
-            ).values_list('room', flat=True)
-            queryset = queryset.exclude(id__in=reservations)
-
-        return queryset
-
 
 class ReservationView(generics.ListCreateAPIView, generics.DestroyAPIView):
+    queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ReservationFilter
 
-    def get_queryset(self):
-        user = self.request.user
-        return Reservation.objects.filter(reserved_by_user=user)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return Reservation.objects.filter(reserved_by_user=user)
 
     def create(self, request, *args, **kwargs):
         room_id = request.data.get('room')
