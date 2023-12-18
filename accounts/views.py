@@ -26,7 +26,7 @@ def registration_view(request):
 
 @authentication_classes([BasicAuthentication])
 @permission_classes([AllowAny])
-class ReservationView(generics.CreateAPIView):
+class RegistrationView(generics.CreateAPIView):
     serializer_class = RegistrationSerializer
 
     def create(self, request, *args, **kwargs):
