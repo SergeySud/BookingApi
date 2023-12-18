@@ -28,10 +28,6 @@ class ReservationView(generics.ListCreateAPIView, generics.DestroyAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ReservationFilter
 
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     return Reservation.objects.filter(reserved_by_user=user)
-
     def create(self, request, *args, **kwargs):
         room_id = request.data.get('room')
         reservation_start_date = request.data.get('reservation_start_date')

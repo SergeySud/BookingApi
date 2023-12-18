@@ -1,6 +1,8 @@
 # filters.py
 import django_filters
 from django.db.models import Q
+from django.http import Http404
+from django.utils.datastructures import MultiValueDictKeyError
 
 from .models import Room, Reservation
 
@@ -15,16 +17,20 @@ class RoomFilter(django_filters.FilterSet):
 
     class Meta:
         model = Room
-        fields = []
+        fields = ["guests_number", "price_per_day"]
 
     def filter_by_availability(self, queryset, name, value):
-        reservations = Reservation.objects.filter(
-            Q(reservation_start_date__lte=value, reservation_end_date__gte=value) |
-            Q(reservation_start_date__lte=self.data["reservation_end_date"],
-              reservation_end_date__gte=self.data["reservation_start_date"])
-        )
-        booked_room_ids = reservations.values_list("room", flat=True)
-        return queryset.exclude(id__in=booked_room_ids)
+        try:
+            reservations = Reservation.objects.filter(
+                Q(reservation_start_date__lte=value, reservation_end_date__gte=value) |
+                Q(reservation_start_date__lte=self.data["reservation_end_date"],
+                  reservation_end_date__gte=self.data["reservation_start_date"])
+            )
+            booked_room_ids = reservations.values_list("room", flat=True)
+            return queryset.exclude(id__in=booked_room_ids)
+
+        except MultiValueDictKeyError as e:
+            raise Http404("Not found")
 
 
 class ReservationFilter(django_filters.FilterSet):
