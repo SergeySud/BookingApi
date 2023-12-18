@@ -11,9 +11,8 @@ class RoomFilter(django_filters.FilterSet):
     guests_number = django_filters.NumberFilter(field_name='guests_number', lookup_expr='gte')
     price_per_day = django_filters.NumberFilter(field_name='price_per_day', lookup_expr='lte')
     reservation_start_date = django_filters.DateFilter(field_name='reservation_start_date',
-                                                       method='filter_by_availability', lookup_expr="gte")
-    reservation_end_date = django_filters.DateFilter(field_name='reservation_end_date', method='filter_by_availability',
-                                                     lookup_expr="gte")
+                                                       method='filter_by_availability')
+    reservation_end_date = django_filters.DateFilter(field_name='reservation_end_date', method='filter_by_availability')
 
     class Meta:
         model = Room
