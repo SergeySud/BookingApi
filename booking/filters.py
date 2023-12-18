@@ -19,9 +19,10 @@ class RoomFilter(django_filters.FilterSet):
         fields = ["guests_number", "price_per_day"]
 
     def filter_by_availability(self, queryset, name, value):
+        if self.data["reservation_end_date"] < self.data["reservation_start_date"]:
+            raise Http404("Invalid date range")
         try:
             reservations = Reservation.objects.filter(
-                Q(reservation_start_date__lte=value, reservation_end_date__gte=value) |
                 Q(reservation_start_date__lte=self.data["reservation_end_date"],
                   reservation_end_date__gte=self.data["reservation_start_date"])
             )
