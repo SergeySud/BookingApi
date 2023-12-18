@@ -27,19 +27,16 @@ API has the following endpoints:
 
 ```/booking/rooms/``` - the endpoint is available without authentication. The endpoint accepts only GET requests.
 
-You can send the following parameters to filter and sort available rooms.
+You can use  the following parameters in URL to filter and sort available rooms.
 ```
-    "guests_number": 1,
-    "sort_by": "price_per_day",
-    "reservation_start_date": "2023-12-02", 
-    "reservation_end_date": "2023-12-03",
+/booking/rooms/?pricer_per_day=10&guests_number=1&reservation_start_date=2023-12-02&reservation_end_date=2023-12-03
 ```
-You can use "name", "price_per_day", "guests_number" parameters for sorting.
 
 
 ```/booking/reservations/``` - the endpoint is available only for authorized users.
 
-Sending a GET request will result in a response with a list of reservation for the user.
+Sending a GET request will result in a response with a list of reservation for the user. The endpoint demands to send any data in 'user' parameter:
+```/booking/reservations/?user=Anydata```
 
 Sending a POST request will add a reservation for the user. The endpoint demands the following parameters:
 ```
